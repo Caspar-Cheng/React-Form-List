@@ -1,2 +1,2 @@
-# React-Practice
-This is a collection of React library usage in JS, coding to become a react developer!
+# React-Form-List
+This is a project to practice on form and list component
