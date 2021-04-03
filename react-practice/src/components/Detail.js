@@ -1,25 +1,23 @@
-import React, { useContext }  from 'react';
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
 
 export const Detail = () => {
-  const id = useParams();
+  const id = useParams().id;
   const { forms } = useContext(GlobalContext);
-  const selectedForm = forms[id];
+  const targetObj = forms.filter((form) => form.id.toString() === id);
+  const selectForm = targetObj[0];
 
   return (
-    <div>
+    <div style={{ marginTop: 20 }}>
       <h3>
-        <em>Description: </em>
-        {selectedForm.description}
+        Description: <em>{selectForm.description}</em>
       </h3>
       <h3>
-        <em>Category: </em>
-        {selectedForm.category}
+        Category: <em>{selectForm.category}</em>
       </h3>
       <h3>
-        <em>Content: </em>
-        {selectedForm.content}
+        Content: <em>{selectForm.content}</em>
       </h3>
     </div>
   );
