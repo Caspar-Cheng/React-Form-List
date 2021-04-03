@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { Link } from "react-router-dom";
 import {
@@ -13,6 +13,13 @@ import {
 
 export const List = () => {
   const { forms, deleteList } = useContext(GlobalContext);
+  const [formObj, setFormObj] = useState(forms);
+  forms.forEach((d) => {
+    if (d.key !== formObj.key) {
+      setFormObj(...formObj, d);
+    }
+  });
+
   return (
     <ListGroup
       className="ml-2"
@@ -21,14 +28,31 @@ export const List = () => {
       <Button
         type="submit"
         className="btn btn-danger"
-        style={{ maxWidth: "150px", marginBottom: "25px" }}
+        style={{ maxWidth: 150, marginBottom: 25 }}
+        onClick={() => {
+          forms.forEach((d) => {
+            if (d.select) {
+              deleteList(d.id);
+            }
+          });
+        }}
       >
         Delete selected
       </Button>
       <ListGroupItem>
         <Row className="d-flex">
           <Col>
-            <Input type="checkbox"></Input>
+            <Input
+              type="checkbox"
+              onChange={(e) => {
+                setFormObj(
+                  formObj.map((d) => {
+                    d.select = e.target.checked;
+                    return d;
+                  })
+                );
+              }}
+            ></Input>
           </Col>
           <Col>
             <Label>Description</Label>
@@ -46,10 +70,25 @@ export const List = () => {
         <ListGroupItem key={form.id}>
           <Row className="d-flex">
             <Col>
-              <Input type="checkbox"></Input>
+              <Input
+                onChange={(e) => {
+                  setFormObj(
+                    formObj.map((d) => {
+                      if (form.id === d.id) {
+                        d.select = e.target.checked;
+                      }
+                      return d;
+                    })
+                  );
+                }}
+                type="checkbox"
+                checked={form.select}
+              ></Input>
             </Col>
             <Col>
-              <Link to={`/todo/${form.id}`} style={{ color: "black" }}>{form.description}</Link>
+              <Link to={`/todo/${form.id}`} style={{ color: "black" }}>
+                {form.description}
+              </Link>
             </Col>
             <Col>
               <Label>{form.category}</Label>
@@ -60,7 +99,11 @@ export const List = () => {
                 name="delete"
                 value="delete"
                 style={{ color: "red", background: "none", border: "none" }}
-                onClick = {() => deleteList(form.id)}
+                onClick={() => {
+                  if (form.select) {
+                    deleteList(form.id);
+                  }
+                }}
               >
                 Delete
               </Button>
