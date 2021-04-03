@@ -1,34 +1,48 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import { v4 as uuid } from "uuid";
+import update from "immutability-helper";
 
 export const SubmitForm = () => {
   const { addList } = useContext(GlobalContext);
   const history = useHistory();
-  const [form, setForm] = useState({
-    id: uuid(),
+  const initialState = {
+    select: false,
+    id: "",
     description: "",
     category: "html",
     content: "",
-  });
+  };
+  const [form, setForm] = useState(initialState);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addList(form);
+    if (form.description !== "" && form.content !== "") {
+      addList(form);
+    } else {
+      alert("Please finish required input!");
+    }
     history.push("/todo");
+    setForm(initialState); //clear input after submit
   };
 
-  const onChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    })
-  };
+  const onChange = useCallback(
+    (e) => {
+      const value = update(form, {
+        [e.target.name]: { $set: e.target.value },
+        id: { $set: uuid() },
+        select: { $set: false },
+      });
+
+      setForm(value);
+    },
+    [form]
+  );
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form>
       <FormGroup className="ml-2">
         <div className="d-flex my-2">
           <Label for="description">Description: </Label>
@@ -65,9 +79,15 @@ export const SubmitForm = () => {
           ></Input>
         </div>
       </FormGroup>
-      <Button type="submit" className="btn btn-success ml-2 my-2">
+      <Button
+        onClick={onSubmit}
+        type="submit"
+        className="btn btn-success ml-2 my-2"
+      >
         Submit
       </Button>
     </Form>
   );
 };
+
+// export default React.memo(SubmitForm);
