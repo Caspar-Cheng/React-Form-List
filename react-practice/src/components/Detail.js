@@ -2,8 +2,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
-const Detail = (forms) => {
-  const formArray = forms.forms;
+const Detail = (props) => {
+  const formArray = props.forms;
   const id = useParams().id;
   const targetObj = formArray.filter((form) => form.id.toString() === id);
   const selectForm = targetObj[0];
