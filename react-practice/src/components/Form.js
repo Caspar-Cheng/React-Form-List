@@ -7,7 +7,7 @@ import update from "immutability-helper";
 import { connect } from "react-redux";
 import { addList } from "../redux/user/user-actions";
 
-const SubmitForm = () => {
+const SubmitForm = (props) => {
   const history = useHistory();
   const initialState = {
     select: false,
@@ -21,7 +21,7 @@ const SubmitForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (form.description !== "" && form.content !== "") {
-      addList(form);
+      props.addList(form);
     } else {
       alert("Please finish required input!");
     }
