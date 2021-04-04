@@ -1,26 +1,28 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+
 import { Header } from "./components/Header";
 import { Todo } from "./components/Todo";
 import { About } from "./components/About";
-import { Detail } from "./components/Detail"
-import { GlobalProvider } from "./context/GlobalState";
+import Detail from "./components/Detail";
+import store from "./redux/store";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <div>
-      <GlobalProvider>
+      <Provider store={store}>
         <Router>
           <Header />
           <Switch>
-            <Route path="/todo" component={Todo} />
-            <Route path="/about" component={About} />
+            <Route exact path="/todo" component={Todo} />
+            <Route exact path="/about" component={About} />
             <Route path="/todo/:id" component={Detail} />
           </Switch>
         </Router>
-      </GlobalProvider>
+      </Provider>
     </div>
   );
 }

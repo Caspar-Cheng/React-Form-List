@@ -1,6 +1,6 @@
 import React from "react";
-import { SubmitForm } from "./Form";
-import { List } from "./List";
+import SubmitForm from "./Form";
+import List from "./List";
 import { Row, Col } from "reactstrap";
 
 export const Todo = () => {

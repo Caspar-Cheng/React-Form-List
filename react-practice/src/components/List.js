@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
-import { GlobalContext } from "../context/GlobalState";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { deleteList } from "../redux/user/user-actions";
 import { Link } from "react-router-dom";
 import {
   ListGroup,
@@ -11,14 +12,16 @@ import {
   Col,
 } from "reactstrap";
 
-export const List = () => {
-  const { forms, deleteList } = useContext(GlobalContext);
-  const [formObj, setFormObj] = useState(forms);
-  forms.forEach((d) => {
-    if (d.key !== formObj.key) {
-      setFormObj(...formObj, d);
-    }
-  });
+const List = (forms) => {
+  const initalForms = forms.forms;
+  const [formObj, setFormObj] = useState(initalForms);
+  useEffect(() => {
+    initalForms.forEach((d) => {
+      if (d.key !== formObj.key) {
+        setFormObj(...formObj, d);
+      }
+    });
+  }, [initalForms, formObj]);
 
   return (
     <ListGroup
@@ -66,7 +69,7 @@ export const List = () => {
         </Row>
       </ListGroupItem>
 
-      {forms.map((form) => (
+      {initalForms.map((form) => (
         <ListGroupItem key={form.id}>
           <Row className="d-flex">
             <Col>
@@ -114,3 +117,13 @@ export const List = () => {
     </ListGroup>
   );
 };
+
+const mapStateToProps = (state) => ({
+  forms: state.user.forms,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  deleteList: (id) => dispatch(deleteList(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);

@@ -1,12 +1,13 @@
-import React, { useState, useContext, useCallback } from "react";
-import { GlobalContext } from "../context/GlobalState";
+import React, { useState, useCallback } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import update from "immutability-helper";
 
-export const SubmitForm = () => {
-  const { addList } = useContext(GlobalContext);
+import { connect } from "react-redux";
+import { addList } from "../redux/user/user-actions";
+
+const SubmitForm = () => {
   const history = useHistory();
   const initialState = {
     select: false,
@@ -90,4 +91,8 @@ export const SubmitForm = () => {
   );
 };
 
-// export default React.memo(SubmitForm);
+const mapDispatchToProps = (dispatch) => ({
+  addList: (form) => dispatch(addList(form)),
+});
+
+export default connect(null, mapDispatchToProps)(SubmitForm);

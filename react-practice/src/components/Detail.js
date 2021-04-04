@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { GlobalContext } from "../context/GlobalState";
+import { connect } from "react-redux";
 
-export const Detail = () => {
+const Detail = (forms) => {
+  const formArray = forms.forms;
   const id = useParams().id;
-  const { forms } = useContext(GlobalContext);
-  const targetObj = forms.filter((form) => form.id.toString() === id);
+  const targetObj = formArray.filter((form) => form.id.toString() === id);
   const selectForm = targetObj[0];
 
   return (
@@ -22,3 +22,9 @@ export const Detail = () => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  forms: state.user.forms,
+});
+
+export default connect(mapStateToProps)(Detail);
