@@ -12,9 +12,9 @@ import {
   Col,
 } from "reactstrap";
 
-const List = (forms) => {
-  const initalForms = forms.forms;
-  const [formObj, setFormObj] = useState(initalForms);
+const List = (props) => {
+  const { forms, deleteList } = props;
+  const [formObj, setFormObj] = useState(forms);
   useEffect(() => {
     initalForms.forEach((d) => {
       if (d.key !== formObj.key) {
