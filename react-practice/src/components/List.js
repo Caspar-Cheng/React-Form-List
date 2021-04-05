@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { deleteList } from "../redux/user/user-actions";
+import { deleteList } from "../store/user/actions";
 import { Link } from "react-router-dom";
 import {
   ListGroup,
@@ -14,14 +14,27 @@ import {
 
 const List = (props) => {
   const { forms, deleteList } = props;
-  const [formObj, setFormObj] = useState(forms);
-  useEffect(() => {
-    initalForms.forEach((d) => {
-      if (d.key !== formObj.key) {
-        setFormObj(...formObj, d);
-      }
-    });
-  }, [initalForms, formObj]);
+  const [checkedForm, setCheckedForm] = useState([]);
+
+  const onSingleChecked = (e, id) => {
+    if (e.target.checked) {
+      setCheckedForm([...checkedForm, id]);
+    } else {
+      setCheckedForm(checkedForm.filter((d) => d !== id));
+    }
+  };
+
+  const onMultipleChecked = (e) => {
+    if (e.target.checked) {
+      const newArr = forms.map((d) => {
+        d.select = e.target.checked;
+        return d.id;
+      });
+      setCheckedForm(newArr);
+    } else {
+      setCheckedForm([]);
+    }
+  };
 
   return (
     <ListGroup
@@ -34,7 +47,7 @@ const List = (props) => {
         style={{ maxWidth: 150, marginBottom: 25 }}
         onClick={() => {
           forms.forEach((d) => {
-            if (d.select) {
+            if (checkedForm.find((x) => x === d.id)) {
               deleteList(d.id);
             }
           });
@@ -48,12 +61,7 @@ const List = (props) => {
             <Input
               type="checkbox"
               onChange={(e) => {
-                setFormObj(
-                  formObj.map((d) => {
-                    d.select = e.target.checked;
-                    return d;
-                  })
-                );
+                onMultipleChecked(e);
               }}
             ></Input>
           </Col>
@@ -69,23 +77,16 @@ const List = (props) => {
         </Row>
       </ListGroupItem>
 
-      {initalForms.map((form) => (
+      {forms.map((form) => (
         <ListGroupItem key={form.id}>
           <Row className="d-flex">
             <Col>
               <Input
                 onChange={(e) => {
-                  setFormObj(
-                    formObj.map((d) => {
-                      if (form.id === d.id) {
-                        d.select = e.target.checked;
-                      }
-                      return d;
-                    })
-                  );
+                  onSingleChecked(e, form.id);
                 }}
                 type="checkbox"
-                checked={form.select}
+                checked={!!checkedForm.find((d) => d === form.id)}
               ></Input>
             </Col>
             <Col>
@@ -103,7 +104,7 @@ const List = (props) => {
                 value="delete"
                 style={{ color: "red", background: "none", border: "none" }}
                 onClick={() => {
-                  if (form.select) {
+                  if (checkedForm.find((d) => d === form.id)) {
                     deleteList(form.id);
                   }
                 }}

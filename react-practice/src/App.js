@@ -6,7 +6,7 @@ import { Header } from "./components/Header";
 import { Todo } from "./components/Todo";
 import { About } from "./components/About";
 import Detail from "./components/Detail";
-import store from "./redux/store";
+import store from "./store/store";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 

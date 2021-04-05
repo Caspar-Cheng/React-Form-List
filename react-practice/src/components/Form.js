@@ -1,32 +1,30 @@
 import React, { useState, useCallback } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
-import { useHistory } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import update from "immutability-helper";
 
 import { connect } from "react-redux";
-import { addList } from "../redux/user/user-actions";
+import { addList } from "../store/user/actions";
+
+const initialState = {
+  select: false,
+  id: "",
+  description: "",
+  category: "html",
+  content: "",
+};
 
 const SubmitForm = (props) => {
-  const history = useHistory();
-  const initialState = {
-    select: false,
-    id: "",
-    description: "",
-    category: "html",
-    content: "",
-  };
   const [form, setForm] = useState(initialState);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (form.description !== "" && form.content !== "") {
+    if (!!form.description && !!form.content) {
       props.addList(form);
     } else {
       alert("Please finish required input!");
     }
-    history.push("/todo");
-    setForm(initialState); //clear input after submit
+    setForm(initialState);
   };
 
   const onChange = useCallback(
