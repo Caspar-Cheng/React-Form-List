@@ -8,7 +8,7 @@ This is a project to practice on CRUD-API of form and list writen in React with 
 2.0 - Use hook(useCallback), and redux(user actions and reducers, root reducer, store) to replace the usage of GlobalState; 
 
 
-3.0 - Use JSON server API to re-write the whole application;
+3.0 - Use JSON server API & components optimization (add more function inside detail page);
 
 
 4.0 - Re-write as TypeScript (airbnb-recommended-rules);
@@ -32,7 +32,7 @@ store folder contains: user folder includes user actions and reducers; root-redu
 Fixed multiple bugs and uptimise the performance by using some of the hook.
 
 
-version 3.0 - implement JSON Server API:
+version 3.0 - implement JSON Server API with redux thunk:
 
 
 add all the api request(get, post, delete, put) into thunk.js(previous action.js); //
