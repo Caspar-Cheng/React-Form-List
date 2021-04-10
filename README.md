@@ -19,3 +19,10 @@ store folder contains: user folder includes user actions and reducers; root-redu
 Fixed multiple bugs and uptimise the performance by using some of the hook.
 
 version 3.0 - implement JSON Server API 
+add all the api request(get, post, delete, put) into thunk.js(previous action.js);
+add editable function inside Detail.js;
+change form item into reusable component; 
+make a reusable componet of confirmation pop up window, here used for after clicking the delete button to ask double confirm about delete;
+re-write api calls function inside thunk.js as share component and import to thunk.js file;
+
+version 4.0 - re-write the project as airbnb-recommended-typescript
