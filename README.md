@@ -8,7 +8,7 @@ This is a project to practice on CRUD-API of form and list writen in React with 
 2.0 - Use hook(useCallback), and redux(user actions and reducers, root reducer, store) to replace the usage of GlobalState; 
 
 
-3.0 - Use JSON server API & components optimization (add more function inside detail page);
+3.0 - Use JSON server API & components optimization (use share components as much as possible);
 
 
 4.0 - Re-write as TypeScript (airbnb-recommended-rules);
