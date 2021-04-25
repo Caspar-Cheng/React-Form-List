@@ -12,6 +12,7 @@ const initialState = {
   category: "html",
   content: "",
   select: false,
+  lastModifiedDate: null,
 };
 
 const SubmitForm = ({ addForm }) => {
@@ -21,11 +22,12 @@ const SubmitForm = ({ addForm }) => {
     description: form.description,
     category: form.category,
     content: form.content,
+    lastModifiedDate: null,
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     if (!!form.description && !!form.content) {
+      formFormat.lastModifiedDate = new Date();
       addForm(formFormat);
     } else {
       alert("Please finish required input!");
@@ -64,11 +66,7 @@ const SubmitForm = ({ addForm }) => {
         onChange={onChange}
       />
 
-      <Button
-        onClick={onSubmit}
-        type="submit"
-        className="btn btn-success ml-2 my-2"
-      >
+      <Button onClick={onSubmit} type="submit" color="success">
         Submit
       </Button>
     </>

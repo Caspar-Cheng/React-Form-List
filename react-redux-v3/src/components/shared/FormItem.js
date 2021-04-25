@@ -27,17 +27,15 @@ const FormItem = ({
           style={style}
           onChange={onChange}
         >
-          {
-            (title =
-              "category" &&
-              options.map((item, id) => {
+          {type === "select"
+            ? options.map((item, id) => {
                 return (
                   <option key={id} value={item.value}>
                     {item.value}
                   </option>
                 );
-              }))
-          }
+              })
+            : null}
         </Input>
       ) : (
         `${value}`

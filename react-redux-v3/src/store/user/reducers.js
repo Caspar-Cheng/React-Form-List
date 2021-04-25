@@ -1,4 +1,4 @@
-import * as actions from "../../components/shared/constants";
+import * as actions from "./constants";
 
 const INITIAL_STATE = {
   status: "idle",
@@ -33,7 +33,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case actions.SUBMIT_FORMS_SUCCESS:
       return {
         status: "success",
-        forms: [...state.forms, action.payload],
+        forms: [action.payload, ...state.forms],
         error: "",
       };
     case actions.SUBMIT_FORMS_FAILURE:
@@ -76,6 +76,23 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         status: "failure",
         forms: [...state],
+        error: action.payload,
+      };
+    case actions.SEARCH_FORMS_REQUEST:
+      return {
+        ...state,
+        status: "searching",
+      };
+    case actions.SEARCH_FORMS_SUCCESS:
+      return {
+        status: "success",
+        forms: action.payload,
+        error: "",
+      };
+    case actions.SEARCH_FORMS_FAILURE:
+      return {
+        status: "failure",
+        forms: [],
         error: action.payload,
       };
     default:

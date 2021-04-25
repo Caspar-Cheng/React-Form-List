@@ -1,4 +1,4 @@
-import * as actionNames from "../../components/shared/constants";
+import * as actionNames from "./constants";
 
 export const fetchFormsRequest = () => ({
   type: actionNames.FETCH_FORMS_REQUEST,
@@ -53,5 +53,19 @@ export const putFormSuccess = (form) => ({
 
 export const putFormFailure = (error) => ({
   type: actionNames.UPDATE_FORMS_FAILURE,
+  payload: error,
+});
+
+export const searchFormsRequest = () => ({
+  type: actionNames.SEARCH_FORMS_REQUEST,
+});
+
+export const searchFormsSuccess = (res) => ({
+  type: actionNames.SEARCH_FORMS_SUCCESS,
+  payload: res.data,
+});
+
+export const searchFormsFailure = (error) => ({
+  type: actionNames.SEARCH_FORMS_FAILURE,
   payload: error,
 });

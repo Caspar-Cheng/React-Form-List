@@ -1,14 +1,16 @@
 import * as action from "./actions";
-import { API } from "../../components/shared/api";
+import api from "../../components/shared/api";
 
-const api = new API();
-
-export const fetchForms = () => {
+export const fetchForms = (page) => {
   return (dispatch) => {
     dispatch(action.fetchFormsRequest());
-    api
-      .get()
-      .then((res) => dispatch(action.fetchFormsSuccess(res)))
+    return api
+      .get(page)
+      .then((res) => {
+        dispatch(action.fetchFormsSuccess(res));
+        const totalCount = res.headers["x-total-count"];
+        return Math.ceil(totalCount / 5);
+      })
       .catch((err) => dispatch(action.fetchFormsFailure(err)));
   };
 };
@@ -40,6 +42,16 @@ export const updateForm = (form) => {
       .put(form)
       .then((res) => dispatch(action.putFormRequest(res)))
       .catch((err) => dispatch(action.putFormFailure(err)));
+  };
+};
+
+export const searchForm = (content) => {
+  return (dispatch) => {
+    dispatch(action.searchFormsRequest());
+    api
+      .search(content)
+      .then((res) => dispatch(action.searchFormsSuccess(res)))
+      .catch((err) => dispatch(action.searchFormsFailure(err)));
   };
 };
 
