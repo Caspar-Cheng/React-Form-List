@@ -40,6 +40,12 @@ add editable function inside Detail.js; //
 change form item into reusable component; //
 make a reusable componet of confirmation pop up window, here used for after clicking the delete button to ask double confirm about delete; //
 re-write api calls function inside thunk.js as share component and import to thunk.js file; //
+add search data and pagination function; //
 
 
-version 4.0 - re-write the project as airbnb-recommended-typescript
+version 4.0 - re-write the project as airbnb-recommended-typescript:
+
+
+re-write project to replace reactstrap usage with material-ui usage; //
+uptimise the project; //
+re-write the uptimised project into airbnb TypeScript format; //
